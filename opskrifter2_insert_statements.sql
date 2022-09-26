@@ -42,7 +42,7 @@ VALUES (@varenavn, @basisvare, @varekategoriID)
 ON DUPLICATE KEY UPDATE
 	Vare.vare_navn = @varenavn,
     Vare.basisvare = @basisvare,
-    Vare.Varekategori_varekategori_id = varekategoriID;
+    Vare.Varekategori_varekategori_id = @varekategoriID;
 SET @vareID = last_insert_id();
 
 INSERT INTO Enhed (enhed_navn)
