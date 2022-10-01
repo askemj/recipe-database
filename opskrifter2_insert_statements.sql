@@ -1,3 +1,9 @@
+/* Test forbindelsen */ 
+SHOW databases;
+USE opskrifter2;
+SELECT * FROM Vare;
+
+/* Indsæt opskrift i Ret-tabel */ 
 SET @retnavn = 'TEST Pastinakfad',
 	@noter = 'En velsmagende test',
     @totaltid = 45, @forberedelsestid = 15, 
@@ -17,7 +23,6 @@ SELECT last_insert_id(); /* så retID returneres til brug ved indsættelse af ta
 SET @retID = (SELECT last_insert_id() ); /* Bruges kun til at køre dette script for sig selv */
 
 /* ... Indsæt Tag ... */
-
 SET @tag = 'Ovnret';
 INSERT INTO Tag (Tag.tag_tekst)
 VALUES (@tag)
@@ -29,7 +34,6 @@ INSERT INTO RetTag (RetTag.Ret_ret_id, RetTag.Tag_tag_id)
 VALUES (@retID, @tagID);
 
 /* .. Indsæt Vare ... */ 
-
 SET @retID = 1, /* NB slet hvis scriptet køres ud i et */
 	@varenavn = 'agurk', 
     @basisvare = 0,
@@ -45,12 +49,14 @@ ON DUPLICATE KEY UPDATE
     Vare.Varekategori_varekategori_id = @varekategoriID;
 SET @vareID = last_insert_id();
 
+/* Indsæt Enhed */
 INSERT INTO Enhed (enhed_navn)
 VALUES (@enhed)
 ON DUPLICATE KEY UPDATE
 	Enhed.enhed_navn = @enhed;
 SET @enhedID = last_insert_id();
 
+/* Link vare til opskrift */
 INSERT INTO RetVare (maengde, Enhed_enhed_id, Ret_ret_id, Vare_vare_id, Varefunktion_Varefunktion_id) 
 VALUES (@maengde, @enhedID, @retID, @vareID, @varefunktion)
 ON DUPLICATE KEY UPDATE
