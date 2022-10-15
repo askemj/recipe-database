@@ -24,9 +24,9 @@ INNER JOIN Tag ON Tag.tag_id = RetTag.Tag_tag_id WHERE Ret.ret_id = @retID;
 /* ... Læs varer ... */
 SET @retID = 1; /* Slet hvis hele scriptet køres */
 
-SELECT RetVare.maengde, Enhed.enhed_navn, Vare.vare_navn, Varekategori.varekategori_tekst, Varefunktion.Varefunktion_tekst FROM RetVare 
+SELECT RetVare.maengde, Enhed.enhed_navn, Vare.vare_navn, Varekategori.varekategori_tekst, Vare.basisvare, Varefunktion.Varefunktion_tekst FROM RetVare 
 INNER JOIN Enhed ON RetVare.Enhed_enhed_id = Enhed.enhed_id
 INNER JOIN Vare ON RetVare.Vare_vare_id = Vare.vare_id
 INNER JOIN Varekategori ON  RetVare.Vare_vare_id = Vare.vare_id AND Vare.vare_id = Varekategori.varekategori_id
 INNER JOIN Varefunktion ON Varefunktion_Varefunktion_id = Varefunktion_id /* FixMe Varefunktion_id burde være med småt */
-WHERE RetVare.Ret_ret_id = @retID;
+WHERE RetVare.Ret_ret_id = @retID; 
