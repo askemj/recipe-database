@@ -9,6 +9,11 @@ SET @retnavn = 'TEST Pastinakfad';
 SELECT * FROM Ret WHERE Ret.ret_navn = @retnavn;
 SET @retID = (SELECT Ret.ret_id FROM Ret WHERE Ret.ret_navn = @retnavn); /* FIXME man kan nok tage det fra outputtet før med SET @retid= ??? */
 
+SELECT Ret.ret_id, Ret.ret_navn, Ret.noter, Ret.antal_portioner, Ret.forberedelsestid_tid, Ret.totaltid_tid, Opskriftstype.opskriftstype_tekst
+FROM Ret
+INNER JOIN Opskriftstype ON Ret.Opskriftstype_opskriftstype_id = Opskriftstype.opskriftstype_id
+WHERE Ret.ret_id = 1;
+
 /* ...  Læs Tags ... */
 SET @retID = 1; /* Slet hvis hele scriptet køres */
 
