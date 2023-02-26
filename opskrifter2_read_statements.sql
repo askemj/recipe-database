@@ -30,3 +30,42 @@ INNER JOIN Vare ON RetVare.Vare_vare_id = Vare.vare_id
 INNER JOIN Varekategori ON  RetVare.Vare_vare_id = Vare.vare_id AND Vare.vare_id = Varekategori.varekategori_id
 INNER JOIN Varefunktion ON Varefunktion_Varefunktion_id = Varefunktion_id /* FixMe Varefunktion_id burde være med småt */
 WHERE RetVare.Ret_ret_id = @retID; 
+
+/* .................................................................................................................................................... */ 
+
+/* ... Læs statisk tabel data ud af database ... */
+/* Tags */
+SELECT Tag.tag_tekst FROM Tag;
+
+/* Ingrediens funktion */ 
+SELECT Varefunktion.varefunktion_tekst FROM Varefunktion;
+
+/* Ingredienskategori */ 
+SELECT Varekategori.varekategori_tekst FROM Varekategori;
+
+/* Opskriftstype */
+SELECT Opskriftstype.opskriftstype_tekst FROM Opskriftstype;
+
+/* Varer */ 
+SELECT Vare.vare_navn, Vare.basisvare, Varekategori.varekategori_tekst FROM Vare
+INNER JOIN Varekategori ON Vare.Varekategori_varekategori_id = Varekategori.varekategori_id;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
