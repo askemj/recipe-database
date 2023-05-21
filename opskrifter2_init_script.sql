@@ -12,7 +12,7 @@ DROP SCHEMA IF EXISTS `opskrifter2` ;
 -- -----------------------------------------------------
 -- Schema opskrifter2
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `opskrifter2` DEFAULT CHARACTER SET utf8 ;
+CREATE SCHEMA IF NOT EXISTS `opskrifter2` ;
 USE `opskrifter2` ;
 
 -- -----------------------------------------------------
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `opskrifter2`.`Opskriftstype` (
   `opskriftstype_id` INT NOT NULL AUTO_INCREMENT,
   `opskriftstype_tekst` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`opskriftstype_id`),
-  UNIQUE INDEX `opskriftstype_tekst_UNIQUE` (`opskriftstype_tekst` ASC))
+  UNIQUE INDEX `opskriftstype_tekst_UNIQUE` (`opskriftstype_tekst` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -42,8 +42,8 @@ CREATE TABLE IF NOT EXISTS `opskrifter2`.`Ret` (
   `totaltid_tid` INT NULL,
   `Opskriftstype_opskriftstype_id` INT NOT NULL,
   PRIMARY KEY (`ret_id`),
-  UNIQUE INDEX `ret_navn_UNIQUE` (`ret_navn` ASC),
-  INDEX `fk_Ret_Opskriftstype1_idx` (`Opskriftstype_opskriftstype_id` ASC),
+  UNIQUE INDEX `ret_navn_UNIQUE` (`ret_navn` ASC) VISIBLE,
+  INDEX `fk_Ret_Opskriftstype1_idx` (`Opskriftstype_opskriftstype_id` ASC) VISIBLE,
   CONSTRAINT `fk_Ret_Opskriftstype1`
     FOREIGN KEY (`Opskriftstype_opskriftstype_id`)
     REFERENCES `opskrifter2`.`Opskriftstype` (`opskriftstype_id`)
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `opskrifter2`.`Varekategori` (
   `varekategori_id` INT NOT NULL AUTO_INCREMENT,
   `varekategori_tekst` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`varekategori_id`),
-  UNIQUE INDEX `varekategori_tekst_UNIQUE` (`varekategori_tekst` ASC))
+  UNIQUE INDEX `varekategori_tekst_UNIQUE` (`varekategori_tekst` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -76,8 +76,8 @@ CREATE TABLE IF NOT EXISTS `opskrifter2`.`Vare` (
   `basisvare` TINYINT NULL,
   `Varekategori_varekategori_id` INT NOT NULL,
   PRIMARY KEY (`vare_id`),
-  UNIQUE INDEX `VareNavn_UNIQUE` (`vare_navn` ASC),
-  INDEX `fk_Vare_Varekategori1_idx` (`Varekategori_varekategori_id` ASC),
+  UNIQUE INDEX `VareNavn_UNIQUE` (`vare_navn` ASC) VISIBLE,
+  INDEX `fk_Vare_Varekategori1_idx` (`Varekategori_varekategori_id` ASC) VISIBLE,
   CONSTRAINT `fk_Vare_Varekategori1`
     FOREIGN KEY (`Varekategori_varekategori_id`)
     REFERENCES `opskrifter2`.`Varekategori` (`varekategori_id`)
@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `opskrifter2`.`Tag` (
   `tag_id` INT NOT NULL AUTO_INCREMENT,
   `tag_tekst` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`tag_id`),
-  UNIQUE INDEX `TagTekst_UNIQUE` (`tag_tekst` ASC))
+  UNIQUE INDEX `TagTekst_UNIQUE` (`tag_tekst` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -107,8 +107,8 @@ DROP TABLE IF EXISTS `opskrifter2`.`RetTag` ;
 CREATE TABLE IF NOT EXISTS `opskrifter2`.`RetTag` (
   `Ret_ret_id` INT NOT NULL,
   `Tag_tag_id` INT NOT NULL,
-  INDEX `fk_Ret_has_Tags_Tags1_idx` (`Tag_tag_id` ASC),
-  INDEX `fk_Ret_has_Tags_Ret1_idx` (`Ret_ret_id` ASC),
+  INDEX `fk_Ret_has_Tags_Tags1_idx` (`Tag_tag_id` ASC) VISIBLE,
+  INDEX `fk_Ret_has_Tags_Ret1_idx` (`Ret_ret_id` ASC) VISIBLE,
   PRIMARY KEY (`Ret_ret_id`, `Tag_tag_id`),
   CONSTRAINT `fk_RetTags_Ret1`
     FOREIGN KEY (`Ret_ret_id`)
@@ -132,7 +132,7 @@ CREATE TABLE IF NOT EXISTS `opskrifter2`.`Enhed` (
   `enhed_id` INT NOT NULL AUTO_INCREMENT,
   `enhed_navn` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`enhed_id`),
-  UNIQUE INDEX `Enhed_UNIQUE` (`enhed_navn` ASC))
+  UNIQUE INDEX `Enhed_UNIQUE` (`enhed_navn` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -145,7 +145,7 @@ CREATE TABLE IF NOT EXISTS `opskrifter2`.`Varefunktion` (
   `Varefunktion_id` INT NOT NULL AUTO_INCREMENT,
   `Varefunktion_tekst` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`Varefunktion_id`),
-  UNIQUE INDEX `Varetype_tekst_UNIQUE` (`Varefunktion_tekst` ASC))
+  UNIQUE INDEX `Varetype_tekst_UNIQUE` (`Varefunktion_tekst` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -155,15 +155,15 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `opskrifter2`.`RetVare` ;
 
 CREATE TABLE IF NOT EXISTS `opskrifter2`.`RetVare` (
-  `maengde` DECIMAL NULL,
+  `maengde` DECIMAL(6,2) NULL,
   `Enhed_enhed_id` INT NULL,
   `Ret_ret_id` INT NOT NULL,
   `Vare_vare_id` INT NOT NULL,
   `Varefunktion_Varefunktion_id` INT NOT NULL,
-  INDEX `fk_Ret_has_Vare_Vare1_idx` (`Vare_vare_id` ASC),
-  INDEX `fk_Ret_has_Vare_Ret1_idx` (`Ret_ret_id` ASC),
+  INDEX `fk_Ret_has_Vare_Vare1_idx` (`Vare_vare_id` ASC) VISIBLE,
+  INDEX `fk_Ret_has_Vare_Ret1_idx` (`Ret_ret_id` ASC) VISIBLE,
   PRIMARY KEY (`Ret_ret_id`, `Vare_vare_id`),
-  INDEX `fk_RetVare_Varefunktion1_idx` (`Varefunktion_Varefunktion_id` ASC),
+  INDEX `fk_RetVare_Varefunktion1_idx` (`Varefunktion_Varefunktion_id` ASC) VISIBLE,
   CONSTRAINT `fk_RetVare_Ret1`
     FOREIGN KEY (`Ret_ret_id`)
     REFERENCES `opskrifter2`.`Ret` (`ret_id`)
