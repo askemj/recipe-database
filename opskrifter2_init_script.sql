@@ -187,6 +187,42 @@ CREATE TABLE IF NOT EXISTS `opskrifter2`.`RetVare` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `opskrifter2`.`Indkøbskurv`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `opskrifter2`.`Indkøbskurv` ;
+
+CREATE TABLE IF NOT EXISTS `opskrifter2`.`Indkøbskurv` (
+  `indkøbskurv_id` INT NOT NULL AUTO_INCREMENT,
+  `oprettet_dato` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `senest_ændret_dato` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+  `beskrivelse_tekst` VARCHAR(90) NULL,
+  PRIMARY KEY (`indkøbskurv_id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `opskrifter2`.`IndkøbskurvVare`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `opskrifter2`.`IndkøbskurvVare` ;
+
+CREATE TABLE IF NOT EXISTS `opskrifter2`.`IndkøbskurvVare` (
+  `Indkøbskurv_indkøbskurv_id` INT NOT NULL,
+  `maengde` DECIMAL(6,2) NULL,
+  `enhed` VARCHAR(45) NULL,
+  `vare` VARCHAR(45) NOT NULL,
+  `varekategori` VARCHAR(45) NOT NULL,
+  `Ret_ret_id` INT NULL,
+  INDEX `fk_IndkøbskurvVare_Indkøbskurv1_idx` (`Indkøbskurv_indkøbskurv_id` ASC) VISIBLE,
+  PRIMARY KEY (`Indkøbskurv_indkøbskurv_id`, `vare`),
+  CONSTRAINT `fk_IndkøbskurvVare_Indkøbskurv1`
+    FOREIGN KEY (`Indkøbskurv_indkøbskurv_id`)
+    REFERENCES `opskrifter2`.`Indkøbskurv` (`indkøbskurv_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
