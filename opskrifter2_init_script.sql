@@ -208,17 +208,16 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `opskrifter2`.`IndkøbskurvVare` ;
 
 CREATE TABLE IF NOT EXISTS `opskrifter2`.`IndkøbskurvVare` (
+  `IndkøbskurvVare_id` INT NOT NULL AUTO_INCREMENT,
   `Indkøbskurv_indkøbskurv_id` INT NOT NULL,
   `maengde` DECIMAL(6,2) NULL,
   `enhed` VARCHAR(45) NOT NULL,
   `vare` VARCHAR(45) NOT NULL,
   `varekategori` VARCHAR(45) NOT NULL,
   `Vare_vare_id` INT NULL,
-  `Ret_ret_id` INT NULL,
-  INDEX `fk_IndkøbskurvVare_Indkøbskurv1_idx` (`Indkøbskurv_indkøbskurv_id` ASC),
-  PRIMARY KEY (`vare`, `Indkøbskurv_indkøbskurv_id`, `enhed`),
-  INDEX `fk_IndkøbskurvVare_Vare1_idx` (`Vare_vare_id` ASC),
-  INDEX `fk_IndkøbskurvVare_Ret1_idx` (`Ret_ret_id` ASC),
+  INDEX `fk_IndkøbskurvVare_Indkøbskurv1_idx` (`Indkøbskurv_indkøbskurv_id` ASC) VISIBLE,
+  PRIMARY KEY (`IndkøbskurvVare_id`),
+  INDEX `fk_IndkøbskurvVare_Vare1_idx` (`Vare_vare_id` ASC) VISIBLE,
   CONSTRAINT `fk_IndkøbskurvVare_Indkøbskurv1`
     FOREIGN KEY (`Indkøbskurv_indkøbskurv_id`)
     REFERENCES `opskrifter2`.`Indkøbskurv` (`indkøbskurv_id`)
@@ -227,11 +226,6 @@ CREATE TABLE IF NOT EXISTS `opskrifter2`.`IndkøbskurvVare` (
   CONSTRAINT `fk_IndkøbskurvVare_Vare1`
     FOREIGN KEY (`Vare_vare_id`)
     REFERENCES `opskrifter2`.`Vare` (`vare_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_IndkøbskurvVare_Ret1`
-    FOREIGN KEY (`Ret_ret_id`)
-    REFERENCES `opskrifter2`.`Ret` (`ret_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
