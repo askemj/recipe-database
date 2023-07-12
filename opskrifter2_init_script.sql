@@ -215,9 +215,9 @@ CREATE TABLE IF NOT EXISTS `opskrifter2`.`IndkøbskurvVare` (
   `vare` VARCHAR(45) NOT NULL,
   `varekategori` VARCHAR(45) NOT NULL,
   `Vare_vare_id` INT NULL,
-  INDEX `fk_IndkøbskurvVare_Indkøbskurv1_idx` (`Indkøbskurv_indkøbskurv_id` ASC) VISIBLE,
+  INDEX `fk_IndkøbskurvVare_Indkøbskurv1_idx` (`Indkøbskurv_indkøbskurv_id` ASC),
   PRIMARY KEY (`IndkøbskurvVare_id`),
-  INDEX `fk_IndkøbskurvVare_Vare1_idx` (`Vare_vare_id` ASC) VISIBLE,
+  INDEX `fk_IndkøbskurvVare_Vare1_idx` (`Vare_vare_id` ASC),
   CONSTRAINT `fk_IndkøbskurvVare_Indkøbskurv1`
     FOREIGN KEY (`Indkøbskurv_indkøbskurv_id`)
     REFERENCES `opskrifter2`.`Indkøbskurv` (`indkøbskurv_id`)
