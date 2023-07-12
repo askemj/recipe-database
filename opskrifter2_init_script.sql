@@ -211,7 +211,7 @@ CREATE TABLE IF NOT EXISTS `opskrifter2`.`IndkøbskurvVare` (
   `IndkøbskurvVare_id` INT NOT NULL AUTO_INCREMENT,
   `Indkøbskurv_indkøbskurv_id` INT NOT NULL,
   `maengde` DECIMAL(6,2) NULL,
-  `enhed` VARCHAR(45) NOT NULL,
+  `enhed` VARCHAR(45) NULL,
   `vare` VARCHAR(45) NOT NULL,
   `varekategori` VARCHAR(45) NOT NULL,
   `Vare_vare_id` INT NULL,
