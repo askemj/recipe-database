@@ -3,7 +3,8 @@ SHOW databases;
 USE opskrifter2;
 SELECT * FROM Vare;
 
-/* Indsæt opskrift i Ret-tabel */ 
+/*			Retter			*/
+/* Create/update opskrift i Ret-tabel */ 
 SET @retnavn = 'TEST Pastinakfad',
 	@noter = 'En velsmagende test',
     @totaltid = 45, @forberedelsestid = 15, 
@@ -22,7 +23,7 @@ ON DUPLICATE KEY UPDATE
 SELECT last_insert_id(); /* så retID returneres til brug ved indsættelse af tags og varer etc. */
 SET @retID = (SELECT last_insert_id() ); /* Bruges kun til at køre dette script for sig selv */
 
-/* ... Indsæt Tag ... */
+/* ... Create/update Tag ... */
 SET @tag = 'Ovnret';
 INSERT INTO Tag (Tag.tag_tekst)
 VALUES (@tag)
@@ -33,7 +34,7 @@ SET @tagID = last_insert_id();
 INSERT INTO RetTag (RetTag.Ret_ret_id, RetTag.Tag_tag_id)
 VALUES (@retID, @tagID);
 
-/* .. Indsæt Vare ... */ 
+/* .. Create/update Vare ... */ 
 SET @retID = 1, /* NB slet hvis scriptet køres ud i et */
 	@varenavn = 'agurk', 
     @basisvare = 0,
@@ -65,3 +66,24 @@ ON DUPLICATE KEY UPDATE
     RetVare.Ret_ret_id = @retID, 
     RetVare.Vare_vare_id = @vareID,
     RetVare.Varefunktion_Varefunktion_id = @varefunktion;
+
+
+
+
+/*			Indkøbskurv			*/
+/* create/update */ 
+INSERT INTO Indkøbskurv (Indkøbskurv.indkøbskurv_id, Indkøbskurv.beskrivelse_tekst) VALUES (2, 'Standardindkøb') ON DUPLICATE KEY UPDATE Indkøbskurv.beskrivelse_tekst='Andet indkøb', Indkøbskurv.senest_ændret_dato=CURRENT_TIMESTAMP;
+/* read */ 
+SELECT * FROM Indkøbskurv;
+SELECT * FROM Indkøbskurv WHERE Indkøbskurv.indkøbskurv_id = 2;
+/* delete ikke nødvendig */ 
+
+/*			IndkøbskurvVare			*/
+/* create/update */
+INSERT INTO IndkøbskurvVare (Indkøbskurv_indkøbskurv_id, maengde, enhed, vare, varekategori) VALUES (1, 1, 'stk.', 'agurk', 'Frugt & Grønt');
+INSERT INTO IndkøbskurvVare (Indkøbskurv_indkøbskurv_id, maengde, enhed, vare, varekategori, Vare_vare_id, Ret_ret_id) VALUES (1, 1, 'stk.', 'agurk', 'Frugt & Grønt', 1, 1);
+/* read */
+SELECT * FROM IndkøbskurvVare;
+SELECT * FROM IndkøbskurvVare WHERE Indkøbskurv_indkøbskurv_id = 2;
+/* delete */ 
+DELETE FROM IndkøbskurvVare WHERE IndkøbskurvVare_id=2;
