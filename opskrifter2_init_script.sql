@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `opskrifter2`.`Ret` (
   CONSTRAINT `fk_Ret_Opskriftstype1`
     FOREIGN KEY (`Opskriftstype_opskriftstype_id`)
     REFERENCES `opskrifter2`.`Opskriftstype` (`opskriftstype_id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
