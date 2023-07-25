@@ -17,7 +17,7 @@ WHERE Ret.ret_id = 1;
 /* ...  Læs Tags ... */
 SET @retID = 1; /* Slet hvis hele scriptet køres */
 
-SELECT Tag.tag_tekst FROM Ret 
+SELECT Tag.tag_id, Tag.tag_tekst FROM Ret 
 INNER JOIN RetTag ON Ret.ret_id = RetTag.Ret_ret_id
 INNER JOIN Tag ON Tag.tag_id = RetTag.Tag_tag_id WHERE Ret.ret_id = @retID;
 
