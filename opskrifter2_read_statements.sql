@@ -37,16 +37,15 @@ WHERE RetVare.Ret_ret_id = @retID;
 
 SET @search_key = '%is%';
 
-SELECT Ret.ret_navn FROM Ret, Tag, RetTag
+SELECT Ret.* FROM Ret, Tag, RetTag
 WHERE Ret.ret_id = RetTag.Ret_ret_id
 AND Tag.tag_id = RetTag.Tag_tag_id
 AND Tag.Tag_tekst LIKE @search_key
 UNION 
-SELECT Ret.ret_navn FROM Ret
+SELECT Ret.* FROM Ret
 WHERE ret_navn LIKE @search_key
 UNION 
-SELECT Ret.ret_navn
-FROM Ret, Vare, RetVare
+SELECT Ret.* FROM Ret, Vare, RetVare
 WHERE Ret.ret_id = RetVare.Ret_ret_id
 AND Vare.vare_id = RetVare.Vare_vare_id
 AND Vare.vare_navn LIKE @search_key;
