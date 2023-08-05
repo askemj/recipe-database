@@ -31,6 +31,26 @@ INNER JOIN Varekategori ON  RetVare.Vare_vare_id = Vare.vare_id AND Vare.vare_id
 INNER JOIN Varefunktion ON Varefunktion_Varefunktion_id = Varefunktion_id 
 WHERE RetVare.Ret_ret_id = @retID; 
 
+/* .................................................................................................................................................. */
+
+/* ... Søg i opskrifter ... */ 
+
+SET @search_key = '%is%';
+
+SELECT Ret.ret_navn FROM Ret, Tag, RetTag
+WHERE Ret.ret_id = RetTag.Ret_ret_id
+AND Tag.tag_id = RetTag.Tag_tag_id
+AND Tag.Tag_tekst LIKE @search_key
+UNION 
+SELECT Ret.ret_navn FROM Ret
+WHERE ret_navn LIKE @search_key
+UNION 
+SELECT Ret.ret_navn
+FROM Ret, Vare, RetVare
+WHERE Ret.ret_id = RetVare.Ret_ret_id
+AND Vare.vare_id = RetVare.Vare_vare_id
+AND Vare.vare_navn LIKE @search_key;
+
 /* .................................................................................................................................................... */ 
 
 /* ... Læs statisk tabel data ud af database ... */
