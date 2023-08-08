@@ -2,6 +2,7 @@
 SHOW databases;
 USE opskrifter2;
 SELECT * FROM Vare;
+SELECT * FROM Ret;
 
 /* Læs opskriftsdetaljer fra Ret-tabel */ 
 
@@ -49,6 +50,11 @@ SELECT Ret.* FROM Ret, Vare, RetVare
 WHERE Ret.ret_id = RetVare.Ret_ret_id
 AND Vare.vare_id = RetVare.Vare_vare_id
 AND Vare.vare_navn LIKE @search_key;
+
+/* ... Tags matchende search querien ovenover ... */ 
+SELECT Ret.ret_id, Tag.tag_id, Tag.tag_tekst FROM Ret 
+INNER JOIN RetTag ON Ret.ret_id = RetTag.Ret_ret_id
+INNER JOIN Tag ON Tag.tag_id = RetTag.Tag_tag_id WHERE Ret.ret_id IN (1, 7, 16, 20, 22, 23, 28, 30);
 
 /* .................................................................................................................................................... */ 
 
