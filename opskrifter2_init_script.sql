@@ -196,7 +196,7 @@ DROP TABLE IF EXISTS `opskrifter2`.`Indkøbskurv` ;
 CREATE TABLE IF NOT EXISTS `opskrifter2`.`Indkøbskurv` (
   `indkøbskurv_id` INT NOT NULL AUTO_INCREMENT,
   `oprettet_dato` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
-  `senest_ændret_dato` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+  `senest_ændret_dato` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `beskrivelse_tekst` VARCHAR(90) NULL,
   PRIMARY KEY (`indkøbskurv_id`))
 ENGINE = InnoDB;
