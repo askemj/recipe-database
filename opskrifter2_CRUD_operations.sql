@@ -72,6 +72,8 @@ ON DUPLICATE KEY UPDATE
 
 /*			Indkøbskurv			*/
 /* create/update */ 
+INSERT INTO Indkøbskurv (Indkøbskurv.beskrivelse_tekst) VALUES ('Festindkøb');
+UPDATE Indkøbskurv SET Indkøbskurv.senest_ændret_dato = CURRENT_TIMESTAMP() WHERE Indkøbskurv.indkøbskurv_id=15;
 INSERT INTO Indkøbskurv (Indkøbskurv.indkøbskurv_id, Indkøbskurv.beskrivelse_tekst) VALUES (2, 'Standardindkøb') ON DUPLICATE KEY UPDATE Indkøbskurv.beskrivelse_tekst='Andet indkøb', Indkøbskurv.senest_ændret_dato=CURRENT_TIMESTAMP;
 /* read */ 
 SELECT * FROM Indkøbskurv;
