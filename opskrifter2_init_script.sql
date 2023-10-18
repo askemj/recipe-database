@@ -94,6 +94,7 @@ DROP TABLE IF EXISTS `opskrifter2`.`Tag` ;
 CREATE TABLE IF NOT EXISTS `opskrifter2`.`Tag` (
   `tag_id` INT NOT NULL AUTO_INCREMENT,
   `tag_tekst` VARCHAR(45) NOT NULL,
+  `tag_beskrivelse` VARCHAR(120) NOT NULL DEFAULT 'NA',
   PRIMARY KEY (`tag_id`),
   UNIQUE INDEX `TagTekst_UNIQUE` (`tag_tekst` ASC))
 ENGINE = InnoDB;
