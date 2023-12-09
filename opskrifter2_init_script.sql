@@ -238,7 +238,27 @@ CREATE TABLE IF NOT EXISTS `opskrifter2`.`IndkøbskurvVare` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- View `opskrifter2`.`VarerTilRet`
+-- -----------------------------------------------------
+DROP VIEW IF EXISTS `opskrifter2`.`VarerTilRet` ;
+USE `opskrifter2`;
+CREATE  OR REPLACE VIEW `VarerTilRet` AS
+SELECT RetVare.maengde, Enhed.enhed_navn, Vare.vare_navn, Varekategori.varekategori_tekst, Vare.basisvare, Varefunktion.Varefunktion_tekst FROM RetVare 
+INNER JOIN Enhed ON RetVare.Enhed_enhed_id = Enhed.enhed_id
+INNER JOIN Vare ON RetVare.Vare_vare_id = Vare.vare_id
+INNER JOIN Varekategori ON Vare.Varekategori_varekategori_id = Varekategori.varekategori_id
+INNER JOIN Varefunktion ON Varefunktion_Varefunktion_id = Varefunktion_id;
 
+-- -----------------------------------------------------
+-- View `opskrifter2`.`TagsTilRet`
+-- -----------------------------------------------------
+DROP VIEW IF EXISTS `opskrifter2`.`TagsTilRet` ;
+USE `opskrifter2`;
+CREATE  OR REPLACE VIEW `TagsTilRet` AS
+SELECT Tag.tag_id, Tag.tag_tekst FROM Ret 
+INNER JOIN RetTag ON Ret.ret_id = RetTag.Ret_ret_id
+INNER JOIN Tag ON Tag.tag_id = RetTag.Tag_tag_id;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
