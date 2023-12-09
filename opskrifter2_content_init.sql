@@ -22,5 +22,9 @@ VALUES ('Hovedingrediens'),
     
 INSERT INTO Opskriftstype (opskriftstype_tekst)
 VALUES ('Hovedret'),
-	('Dessert'), 
-    ('Tilbehør');
+	('Tilbehør'),
+    ('Dessert')
+    ;
+    
+    
+    
