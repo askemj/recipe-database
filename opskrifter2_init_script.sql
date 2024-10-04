@@ -261,6 +261,19 @@ SELECT Ret.ret_id, Tag.tag_id, Tag.tag_tekst FROM Ret
 INNER JOIN RetTag ON Ret.ret_id = RetTag.Ret_ret_id
 INNER JOIN Tag ON Tag.tag_id = RetTag.Tag_tag_id;
 
+-- -----------------------------------------------------
+-- View `opskrifter2`.`RetView`
+-- -----------------------------------------------------
+DROP VIEW IF EXISTS `opskrifter2`.`RetView` ;
+USE `opskrifter2`;
+CREATE  OR REPLACE VIEW `RetView` AS
+SELECT r.ret_id, r.ret_navn, r.noter, r.antal_portioner, r.forberedelsestid_tid, r.totaltid_tid, o.opskriftstype_tekst, GROUP_CONCAT(t.tag_tekst ORDER BY t.tag_tekst SEPARATOR ', ') AS tags
+FROM Ret r
+LEFT JOIN RetTag rt ON r.ret_id = rt.Ret_ret_id
+LEFT JOIN Tag t ON rt.Tag_tag_id = t.tag_id 
+INNER JOIN Opskriftstype o ON r.Opskriftstype_opskriftstype_id = o.opskriftstype_id 
+GROUP BY r.Ret_id;
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
