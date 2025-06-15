@@ -239,6 +239,24 @@ CREATE TABLE IF NOT EXISTS `opskrifter`.`IndkøbskurvVare` (
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
+-- Table `opskrifter`.`Thumbnail`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `opskrifter`.`Thumbnail` ;
+
+CREATE TABLE IF NOT EXISTS `opskrifter`.`Thumbnail` (
+  `thumbnail_base64` TEXT NOT NULL,
+  `Ret_ret_id` INT NOT NULL,
+  PRIMARY KEY (`Ret_ret_id`),
+  CONSTRAINT `fk_Thumbnail_Ret`
+    FOREIGN KEY (`Ret_ret_id`)
+    REFERENCES `opskrifter`.`Ret` (`ret_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+USE `opskrifter` ;
+
+-- -----------------------------------------------------
 -- View `opskrifter`.`VarerTilRet`
 -- -----------------------------------------------------
 DROP VIEW IF EXISTS `opskrifter`.`VarerTilRet` ;
@@ -275,23 +293,25 @@ INNER JOIN Varekategori ON Vare.Varekategori_varekategori_id = Varekategori.vare
 -- -----------------------------------------------------
 DROP VIEW IF EXISTS `opskrifter`.`RetView` ;
 USE `opskrifter`;
-CREATE   OR REPLACE VIEW `RetView` AS
+CREATE OR REPLACE VIEW RetView AS
 SELECT 
-  r.ret_id, 
-  r.ret_navn, 
-  r.noter, 
-  r.antal_portioner, 
-  r.forberedelsestid_tid, 
-  r.totaltid_tid, 
-  o.opskriftstype_tekst, 
-  GROUP_CONCAT(DISTINCT t.tag_tekst ORDER BY t.tag_tekst SEPARATOR ', ') AS tags, 
-  GROUP_CONCAT(DISTINCT v.vare_navn ORDER BY v.vare_navn SEPARATOR ', ') AS ingredienser
+    r.ret_id,
+    r.ret_navn,
+    r.noter,
+    r.antal_portioner,
+    r.forberedelsestid_tid,
+    r.totaltid_tid,
+    o.opskriftstype_tekst,
+    GROUP_CONCAT(DISTINCT t.tag_tekst ORDER BY t.tag_tekst SEPARATOR ', ') AS tags,
+    GROUP_CONCAT(DISTINCT v.vare_navn ORDER BY v.vare_navn SEPARATOR ', ') AS ingredienser,
+    th.thumbnail_base64
 FROM Ret r
+INNER JOIN Opskriftstype o ON r.Opskriftstype_opskriftstype_id = o.opskriftstype_id
 LEFT JOIN RetTag rt ON r.ret_id = rt.Ret_ret_id
-LEFT JOIN Tag t ON rt.Tag_tag_id = t.tag_id 
+LEFT JOIN Tag t ON rt.Tag_tag_id = t.tag_id
 LEFT JOIN RetVare rv ON r.ret_id = rv.Ret_ret_id
 LEFT JOIN Vare v ON rv.Vare_vare_id = v.vare_id
-INNER JOIN Opskriftstype o ON r.Opskriftstype_opskriftstype_id = o.opskriftstype_id 
+LEFT JOIN Thumbnail th ON r.ret_id = th.Ret_ret_id
 GROUP BY r.ret_id;
 
 SET SQL_MODE=@OLD_SQL_MODE;
