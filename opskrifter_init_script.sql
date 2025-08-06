@@ -257,6 +257,22 @@ ENGINE = InnoDB;
 USE `opskrifter` ;
 
 -- -----------------------------------------------------
+-- Table `opskrifter`.`MealPlans`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `opskrifter`.`MealPlans` ;
+
+CREATE TABLE IF NOT EXISTS `opskrifter`.`MealPlans` (
+  `id` TEXT NOT NULL,
+  `oprettet` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `ændret` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `MealPlanJson` TEXT NOT NULL,
+  `beskrivelse` TEXT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+USE `opskrifter` ;
+
+-- -----------------------------------------------------
 -- View `opskrifter`.`VarerTilRet`
 -- -----------------------------------------------------
 DROP VIEW IF EXISTS `opskrifter`.`VarerTilRet` ;
